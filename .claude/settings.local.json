@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find /Users/eundong/Dev/dear_store -name *.sql -o -name schema* -o -name migrations -type d)",
+      "Bash(docker exec:*)",
+      "Bash(pnpm db:migrate)"
+    ]
+  }
+}

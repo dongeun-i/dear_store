@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+
+<html class="light" lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "inverse-surface": "#323031",
+              "tertiary": "#b90a5a",
+              "on-tertiary": "#ffffff",
+              "outline": "#8d7076",
+              "primary": "#b90a5a",
+              "surface-dim": "#f1f1f1",
+              "outline-variant": "#e0e0e0",
+              "surface-container-high": "#f5f5f5",
+              "primary-container": "#ff4d8d",
+              "inverse-primary": "#ffb1c4",
+              "on-tertiary-container": "#5b0028",
+              "on-background": "#1d1b1d",
+              "surface-container": "#f8f8f8",
+              "on-error-container": "#93000a",
+              "surface-tint": "#b90a5a",
+              "primary-fixed-dim": "#ffb1c4",
+              "on-tertiary-fixed": "#3f001a",
+              "primary-fixed": "#ffd9e0",
+              "secondary": "#00677f",
+              "secondary-fixed-dim": "#4cd6ff",
+              "surface-container-highest": "#eeeeee",
+              "on-secondary-container": "#005266",
+              "on-surface": "#1d1b1d",
+              "surface-container-lowest": "#ffffff",
+              "tertiary-fixed": "#ffd9e0",
+              "background": "#f9fafb",
+              "on-secondary": "#ffffff",
+              "on-primary-container": "#5b0028",
+              "surface-container-low": "#fafafa",
+              "error": "#ba1a1a",
+              "surface": "#ffffff",
+              "secondary-fixed": "#b7eaff",
+              "inverse-on-surface": "#f5f5f5",
+              "tertiary-fixed-dim": "#ffb1c4",
+              "on-primary": "#ffffff",
+              "on-surface-variant": "#666666",
+              "on-primary-fixed": "#3f001a",
+              "surface-bright": "#ffffff",
+              "tertiary-container": "#ff4d8d",
+              "error-container": "#ffdad6",
+              "on-secondary-fixed": "#001f28",
+              "on-secondary-fixed-variant": "#004e60",
+              "on-error": "#ffffff",
+              "secondary-container": "#00ccf9",
+              "surface-variant": "#f0f0f0",
+              "on-tertiary-fixed-variant": "#8f0043",
+              "on-primary-fixed-variant": "#8f0043",
+              "naver-green": "#2DB400"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Manrope"],
+              "label": ["Manrope"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Manrope', sans-serif; }
+    </style>
+</head>
+<body class="bg-background text-on-surface antialiased overflow-x-hidden">
+<!-- SideNavBar -->
+<aside class="h-screen w-64 fixed left-0 top-0 border-r border-outline-variant/30 bg-surface-container-lowest dark:bg-slate-900 font-['Manrope'] antialiased tracking-tight z-50">
+<div class="flex flex-col h-full py-6">
+<div class="px-6 mb-10">
+<div class="text-xl font-bold tracking-tighter text-[#b90a5a] dark:text-[#ff4d8d]">Tech Ledger</div>
+<div class="text-[10px] uppercase tracking-[0.2em] text-on-surface-variant font-bold opacity-70">글로벌 소싱 솔루션</div>
+</div>
+<nav class="flex-1 space-y-1">
+<!-- Active Item: Dashboard -->
+<a class="flex items-center gap-3 px-4 py-3 bg-surface-container-high dark:bg-slate-800 text-[#b90a5a] dark:text-[#ff4d8d] rounded-r-full font-bold border-l-4 border-[#b90a5a] translate-x-1 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span>대시보드</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#594046] dark:text-slate-400 hover:text-[#b90a5a] transition-all duration-200 hover:bg-surface-container dark:hover:bg-slate-800" href="#">
+<span class="material-symbols-outlined" data-icon="language">language</span>
+<span>글로벌 소싱</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#594046] dark:text-slate-400 hover:text-[#b90a5a] transition-all duration-200 hover:bg-surface-container dark:hover:bg-slate-800" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span>상품 관리</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#594046] dark:text-slate-400 hover:text-[#b90a5a] transition-all duration-200 hover:bg-surface-container dark:hover:bg-slate-800" href="#">
+<span class="material-symbols-outlined" data-icon="shopping_cart">shopping_cart</span>
+<span>주문 내역</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#594046] dark:text-slate-400 hover:text-[#b90a5a] transition-all duration-200 hover:bg-surface-container dark:hover:bg-slate-800" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span>설정</span>
+</a>
+</nav>
+<!-- Naver Smart Store Integration Status -->
+<div class="px-4 mb-6">
+<div class="bg-surface-container p-4 rounded-xl border border-outline-variant/30">
+<div class="flex items-center gap-2 mb-2">
+<div class="w-2 h-2 rounded-full bg-naver-green"></div>
+<span class="text-[10px] font-bold text-on-surface">네이버 스마트스토어</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-[10px] text-on-surface-variant">연동 상태: <span class="text-naver-green font-bold">정상</span></span>
+<button class="text-[9px] font-bold underline text-on-surface-variant">관리</button>
+</div>
+</div>
+</div>
+<div class="px-4 mt-auto">
+<button class="w-full py-3 bg-gradient-to-br from-[#b90a5a] to-[#ff4d8d] text-white rounded-lg font-bold flex items-center justify-center gap-2 shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-sm" data-icon="add">add</span>
+                새 요청 작성
+            </button>
+</div>
+</div>
+</aside>
+<!-- TopNavBar -->
+<header class="fixed top-0 right-0 left-64 h-16 z-40 bg-white/70 dark:bg-slate-950/70 backdrop-blur-xl border-b border-outline-variant/30">
+<div class="flex justify-between items-center px-8 w-full h-full">
+<div class="flex items-center flex-1">
+<div class="relative w-96 group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-lg">search</span>
+<input class="w-full bg-surface-container border-none rounded-full py-2 pl-10 pr-4 text-sm focus:ring-2 focus:ring-[#b90a5a]/30 transition-all outline-none" placeholder="통합 원장 검색..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+<span class="text-[10px] font-bold tracking-widest uppercase text-secondary">실시간 동기화 중</span>
+</div>
+<button class="text-on-surface-variant hover:text-[#b90a5a] transition-all">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<div class="flex items-center gap-3 border-l pl-6 border-outline-variant/30">
+<div class="text-right">
+<div class="text-xs font-bold leading-none">알렉스 스털링</div>
+<div class="text-[10px] text-on-surface-variant">글로벌 총괄 매니저</div>
+</div>
+<img alt="사용자 프로필" class="w-8 h-8 rounded-full object-cover ring-2 ring-primary/10" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBFy71OhuAbtogmqLcuHTPR79aM2w7b8-22wRsvwTF_ImBhlxomvVjcBgf5Kn3YUGZ3Bw0iTCiYAhenEPRmvUTw9uBioHbIG0iAsaEh-Lf-R-en8nr2HvaSVPZfzPlXpDKPgWyJt8cklAOLrgI7UJ1Yel5ElDUrgN9A-xcmmWau4TPNBjjAjOtuLyCnhQ4LXKn7GN0qJ_OMkO-Lb5EASbhbPtOLXxxpJb9Qf8Upf1JSgJAmYwZZiKyzkBH8tmOgVeZtllpka2aPb5c"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-64 pt-20 p-8 min-h-screen">
+<!-- Global Supply Tracker (Ticker) -->
+<div class="mb-8 overflow-hidden rounded-xl bg-surface-container/50 border border-outline-variant/20 p-3">
+<div class="flex items-center gap-12 whitespace-nowrap overflow-hidden">
+<div class="flex items-center gap-4 animate-none">
+<span class="text-[10px] font-black uppercase tracking-tighter text-secondary">심천 허브:</span>
+<span class="text-xs font-medium text-on-surface">물류 +4.2%</span>
+<span class="text-[10px] font-black uppercase tracking-tighter text-secondary">프랑크푸르트 DB:</span>
+<span class="text-xs font-medium text-on-surface">지연 12ms</span>
+<span class="text-[10px] font-black uppercase tracking-tighter text-secondary">가격 지수:</span>
+<span class="text-xs font-medium text-primary">강세 1.04</span>
+<span class="text-[10px] font-black uppercase tracking-tighter text-secondary">활성 입찰:</span>
+<span class="text-xs font-medium text-on-surface">1,204건</span>
+<span class="text-[10px] font-black uppercase tracking-tighter text-naver-green">스마트스토어 동기화:</span>
+<span class="text-xs font-medium text-on-surface">대기 12건</span>
+</div>
+</div>
+</div>
+<!-- High-Level Stats Bento -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+<div class="bg-white p-6 rounded-xl shadow-sm border border-outline-variant/20 relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-primary" data-icon="payments">payments</span>
+</div>
+<div class="text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2">오늘의 매출</div>
+<div class="text-4xl font-extrabold tracking-tighter text-primary">₩548,220,000</div>
+<div class="mt-4 flex items-center gap-2 text-xs font-bold text-secondary">
+<span class="material-symbols-outlined text-sm" data-icon="trending_up">trending_up</span>
+                전일 대비 +12.5%
+            </div>
+</div>
+<div class="bg-white p-6 rounded-xl shadow-sm border border-outline-variant/20 relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-secondary" data-icon="inventory">inventory</span>
+</div>
+<div class="text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2">수집된 상품</div>
+<div class="text-4xl font-extrabold tracking-tighter text-on-surface">14,202개</div>
+<div class="mt-4 flex items-center gap-2 text-xs font-bold text-primary">
+<span class="material-symbols-outlined text-sm" data-icon="update">update</span>
+                342개 인입 대기 중
+            </div>
+</div>
+<div class="bg-white p-6 rounded-xl shadow-sm border border-outline-variant/20 relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-secondary" data-icon="package_2">package_2</span>
+</div>
+<div class="text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2">대기 중인 주문</div>
+<div class="text-4xl font-extrabold tracking-tighter text-on-surface">892건</div>
+<div class="mt-4 flex items-center gap-2 text-xs font-bold text-on-surface-variant">
+<span class="material-symbols-outlined text-sm" data-icon="pending_actions">pending_actions</span>
+                평균 리드타임: 4.2일
+            </div>
+</div>
+</div>
+<!-- Middle Section: Chart & Pulse -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+<!-- Revenue Chart Area -->
+<div class="lg:col-span-2 bg-white p-8 rounded-xl shadow-sm border border-outline-variant/20 relative overflow-hidden">
+<div class="flex justify-between items-center mb-10">
+<div>
+<h2 class="text-2xl font-extrabold tracking-tight">소싱 매출 현황</h2>
+<p class="text-sm text-on-surface-variant">글로벌 노드별 성과 지표</p>
+</div>
+<div class="flex bg-surface-container rounded-lg p-1">
+<button class="px-4 py-1.5 text-xs font-bold rounded-md bg-white text-primary shadow-sm border border-outline-variant/30">주간</button>
+<button class="px-4 py-1.5 text-xs font-bold rounded-md text-on-surface-variant hover:bg-surface-container-high transition-all">월간</button>
+</div>
+</div>
+<div class="h-64 flex items-end justify-between gap-4 px-4 relative">
+<div class="absolute inset-0 flex flex-col justify-between py-2 border-b border-outline-variant/10">
+<div class="border-b border-outline-variant/10 w-full h-0"></div>
+<div class="border-b border-outline-variant/10 w-full h-0"></div>
+<div class="border-b border-outline-variant/10 w-full h-0"></div>
+<div class="border-b border-outline-variant/10 w-full h-0"></div>
+</div>
+<div class="w-full h-full relative z-10 flex items-end justify-around">
+<div class="w-12 bg-gradient-to-t from-primary/80 to-primary-container h-[60%] rounded-t-lg relative group">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-inverse-surface text-white text-[10px] py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity">₩4,200만</div>
+</div>
+<div class="w-12 bg-gradient-to-t from-secondary/80 to-secondary-container h-[85%] rounded-t-lg relative group">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-inverse-surface text-white text-[10px] py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity">₩6,800만</div>
+</div>
+<div class="w-12 bg-gradient-to-t from-primary/80 to-primary-container h-[45%] rounded-t-lg relative group"></div>
+<div class="w-12 bg-gradient-to-t from-secondary/80 to-secondary-container h-[70%] rounded-t-lg relative group"></div>
+<div class="w-12 bg-gradient-to-t from-primary/80 to-primary-container h-[95%] rounded-t-lg relative group"></div>
+<div class="w-12 bg-gradient-to-t from-secondary/80 to-secondary-container h-[55%] rounded-t-lg relative group"></div>
+<div class="w-12 bg-gradient-to-t from-primary/80 to-primary-container h-[75%] rounded-t-lg relative group"></div>
+</div>
+</div>
+<div class="flex justify-around mt-4 text-[10px] font-bold uppercase tracking-widest text-on-surface-variant/50">
+<span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span><span>일</span>
+</div>
+</div>
+<!-- Global Pulse -->
+<div class="bg-surface-container-high/50 p-8 rounded-xl border border-outline-variant/20 backdrop-blur-md relative overflow-hidden">
+<div class="flex items-center justify-between mb-8">
+<h2 class="text-xl font-extrabold tracking-tight">글로벌 상태</h2>
+<span class="material-symbols-outlined text-secondary" data-icon="sensors">sensors</span>
+</div>
+<div class="space-y-6">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-2 h-2 rounded-full bg-secondary shadow-[0_0_8px_#00d1ff]"></div>
+<span class="text-sm font-bold">노드 스크래퍼</span>
+</div>
+<span class="text-xs font-mono font-bold bg-secondary-fixed text-on-secondary-fixed px-2 py-0.5 rounded">99.9% 정상</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-2 h-2 rounded-full bg-secondary shadow-[0_0_8px_#00d1ff]"></div>
+<span class="text-sm font-bold">원장 데이터베이스</span>
+</div>
+<span class="text-xs font-mono font-bold bg-secondary-fixed text-on-secondary-fixed px-2 py-0.5 rounded">12ms 응답</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-2 h-2 rounded-full bg-naver-green shadow-[0_0_8px_#2DB400]"></div>
+<span class="text-sm font-bold">스마트스토어 동기화</span>
+</div>
+<span class="text-xs font-mono font-bold bg-green-100 text-naver-green px-2 py-0.5 rounded">최근 1분전</span>
+</div>
+</div>
+<div class="mt-10 p-4 bg-white rounded-lg border border-outline-variant/20">
+<div class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant mb-4">트래픽 히트맵</div>
+<div class="flex gap-1 h-12">
+<div class="flex-1 bg-secondary rounded-sm opacity-20"></div>
+<div class="flex-1 bg-secondary rounded-sm opacity-40"></div>
+<div class="flex-1 bg-secondary rounded-sm opacity-80"></div>
+<div class="flex-1 bg-secondary rounded-sm opacity-100"></div>
+<div class="flex-1 bg-secondary rounded-sm opacity-90"></div>
+<div class="flex-1 bg-secondary rounded-sm opacity-60"></div>
+<div class="flex-1 bg-secondary rounded-sm opacity-30"></div>
+<div class="flex-1 bg-secondary rounded-sm opacity-50"></div>
+<div class="flex-1 bg-secondary rounded-sm opacity-70"></div>
+</div>
+<div class="mt-2 text-[9px] text-on-surface-variant italic">실시간 처리량: 4.8 GB/s</div>
+</div>
+</div>
+</div>
+<!-- Bottom Section: Live Feed Table -->
+<section class="bg-white rounded-xl shadow-sm border border-outline-variant/20 overflow-hidden">
+<div class="px-8 py-6 flex items-center justify-between border-b border-outline-variant/10">
+<h2 class="text-xl font-extrabold tracking-tight">실시간 소싱 피드</h2>
+<div class="flex items-center gap-4">
+<span class="text-xs font-bold text-on-surface-variant">필터:</span>
+<button class="text-[10px] font-bold px-3 py-1 bg-surface-container rounded-full hover:bg-surface-container-high transition-all">전체 공급사</button>
+<button class="text-[10px] font-bold px-3 py-1 bg-surface-container rounded-full hover:bg-surface-container-high transition-all">최고 입찰가</button>
+</div>
+</div>
+<table class="w-full">
+<thead>
+<tr class="bg-surface-container-low">
+<th class="px-8 py-4 text-left text-[10px] font-black uppercase tracking-widest text-on-surface-variant">공급사 노드</th>
+<th class="px-8 py-4 text-left text-[10px] font-black uppercase tracking-widest text-on-surface-variant">카테고리</th>
+<th class="px-8 py-4 text-left text-[10px] font-black uppercase tracking-widest text-on-surface-variant">현재 입찰가</th>
+<th class="px-8 py-4 text-left text-[10px] font-black uppercase tracking-widest text-on-surface-variant">단가</th>
+<th class="px-8 py-4 text-left text-[10px] font-black uppercase tracking-widest text-on-surface-variant">리드타임</th>
+<th class="px-8 py-4 text-right text-[10px] font-black uppercase tracking-widest text-on-surface-variant">액션</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/5">
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-8 py-5">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center font-bold text-primary">SH</div>
+<div>
+<div class="text-sm font-bold">Shenzhen Precision</div>
+<div class="text-[10px] text-on-surface-variant uppercase">ID: 992-CN</div>
+</div>
+</div>
+</td>
+<td class="px-8 py-5">
+<span class="px-3 py-1 rounded-full bg-secondary-fixed text-on-secondary-fixed text-[10px] font-bold">마이크로 전자</span>
+</td>
+<td class="px-8 py-5 text-sm font-bold text-primary">₩165,000,000</td>
+<td class="px-8 py-5 text-sm font-mono">₩1,890</td>
+<td class="px-8 py-5 text-sm">12일</td>
+<td class="px-8 py-5 text-right">
+<div class="flex justify-end gap-2">
+<button class="px-3 py-1.5 bg-naver-green text-white text-[10px] font-bold rounded-lg hover:bg-[#279e00] transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">sync</span>
+                                스마트스토어 전송
+                            </button>
+<button class="p-2 hover:bg-surface-container rounded-full text-on-surface-variant transition-all">
+<span class="material-symbols-outlined text-xl" data-icon="open_in_new">open_in_new</span>
+</button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-8 py-5">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center font-bold text-secondary">AM</div>
+<div>
+<div class="text-sm font-bold">Amster Logistics</div>
+<div class="text-[10px] text-on-surface-variant uppercase">ID: 412-NL</div>
+</div>
+</div>
+</td>
+<td class="px-8 py-5">
+<span class="px-3 py-1 rounded-full bg-primary-fixed text-on-primary-fixed text-[10px] font-bold">패키징</span>
+</td>
+<td class="px-8 py-5 text-sm font-bold text-primary">₩60,000,000</td>
+<td class="px-8 py-5 text-sm font-mono">₩110</td>
+<td class="px-8 py-5 text-sm">4일</td>
+<td class="px-8 py-5 text-right">
+<div class="flex justify-end gap-2">
+<button class="px-3 py-1.5 bg-naver-green text-white text-[10px] font-bold rounded-lg hover:bg-[#279e00] transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">sync</span>
+                                스마트스토어 전송
+                            </button>
+<button class="p-2 hover:bg-surface-container rounded-full text-on-surface-variant transition-all">
+<span class="material-symbols-outlined text-xl" data-icon="open_in_new">open_in_new</span>
+</button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-8 py-5">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center font-bold text-primary">VT</div>
+<div>
+<div class="text-sm font-bold">Viet-Tech Systems</div>
+<div class="text-[10px] text-on-surface-variant uppercase">ID: 104-VN</div>
+</div>
+</div>
+</td>
+<td class="px-8 py-5">
+<span class="px-3 py-1 rounded-full bg-secondary-fixed text-on-secondary-fixed text-[10px] font-bold">프로세서</span>
+</td>
+<td class="px-8 py-5 text-sm font-bold text-primary">₩280,000,000</td>
+<td class="px-8 py-5 text-sm font-mono">₩16,500</td>
+<td class="px-8 py-5 text-sm">21일</td>
+<td class="px-8 py-5 text-right">
+<div class="flex justify-end gap-2">
+<button class="px-3 py-1.5 bg-naver-green text-white text-[10px] font-bold rounded-lg hover:bg-[#279e00] transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">sync</span>
+                                스마트스토어 전송
+                            </button>
+<button class="p-2 hover:bg-surface-container rounded-full text-on-surface-variant transition-all">
+<span class="material-symbols-outlined text-xl" data-icon="open_in_new">open_in_new</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="px-8 py-4 bg-surface-container-low/50 flex justify-center">
+<button class="text-xs font-bold text-on-surface-variant hover:text-primary flex items-center gap-2 transition-all">
+                데이터 더 보기
+                <span class="material-symbols-outlined text-sm" data-icon="expand_more">expand_more</span>
+</button>
+</div>
+</section>
+</main>
+<button class="fixed bottom-8 right-8 w-14 h-14 rounded-full bg-gradient-to-br from-[#b90a5a] to-[#ff4d8d] text-white shadow-[0_8px_32px_rgba(185,10,90,0.4)] flex items-center justify-center hover:scale-105 transition-transform z-50">
+<span class="material-symbols-outlined" data-icon="bolt">bolt</span>
+</button>
+</body></html>

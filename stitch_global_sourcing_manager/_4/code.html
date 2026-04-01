@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+
+<html class="light" lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>글로벌 소싱 매니저 | Tech Ledger</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "inverse-surface": "#323031",
+                        "tertiary": "#b90a5a",
+                        "on-tertiary": "#ffffff",
+                        "outline": "#8d7076",
+                        "primary": "#b90a5a",
+                        "surface-dim": "#f1f1f1",
+                        "outline-variant": "#d1d5db",
+                        "surface-container-high": "#f3f4f6",
+                        "primary-container": "#ff4d8d",
+                        "inverse-primary": "#ffb1c4",
+                        "on-tertiary-container": "#5b0028",
+                        "on-background": "#111827",
+                        "surface-container": "#f9fafb",
+                        "on-error-container": "#93000a",
+                        "surface-tint": "#b90a5a",
+                        "primary-fixed-dim": "#ffb1c4",
+                        "on-tertiary-fixed": "#3f001a",
+                        "primary-fixed": "#ffd9e0",
+                        "secondary": "#00677f",
+                        "secondary-fixed-dim": "#4cd6ff",
+                        "surface-container-highest": "#e5e7eb",
+                        "on-secondary-container": "#005266",
+                        "on-surface": "#111827",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary-fixed": "#ffd9e0",
+                        "background": "#fbfbfb",
+                        "on-secondary": "#ffffff",
+                        "on-primary-container": "#5b0028",
+                        "surface-container-low": "#f9fafb",
+                        "error": "#ba1a1a",
+                        "surface": "#fbfbfb",
+                        "secondary-fixed": "#b7eaff",
+                        "inverse-on-surface": "#f3f4f6",
+                        "tertiary-fixed-dim": "#ffb1c4",
+                        "on-primary": "#ffffff",
+                        "on-surface-variant": "#4b5563",
+                        "on-primary-fixed": "#3f001a",
+                        "surface-bright": "#ffffff",
+                        "tertiary-container": "#ff4d8d",
+                        "error-container": "#ffdad6",
+                        "on-secondary-fixed": "#001f28",
+                        "on-secondary-fixed-variant": "#004e60",
+                        "on-error": "#ffffff",
+                        "secondary-container": "#00ccf9",
+                        "surface-variant": "#f3f4f6",
+                        "on-tertiary-fixed-variant": "#8f0043",
+                        "on-primary-fixed-variant": "#8f0043"
+                    },
+                    fontFamily: {
+                        "headline": ["Manrope", "sans-serif"],
+                        "body": ["Manrope", "sans-serif"],
+                        "label": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Manrope', 'Pretendard', sans-serif; }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(24px);
+        }
+        .animate-marquee {
+            animation: marquee 30s linear infinite;
+        }
+        @keyframes marquee {
+            0% { transform: translateX(0%); }
+            100% { transform: translateX(-50%); }
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface antialiased">
+<!-- SideNavBar Shell -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-[#f3f4f6] flex flex-col py-6 font-['Manrope'] antialiased tracking-tight z-50 border-r border-gray-200">
+<div class="px-6 mb-10">
+<h1 class="text-xl font-bold tracking-tighter text-[#b90a5a]">Tech Ledger</h1>
+<p class="text-[10px] font-label uppercase tracking-widest text-on-surface-variant/60">글로벌 소싱 시스템</p>
+</div>
+<nav class="flex-1 flex flex-col">
+<div class="flex items-center gap-3 px-4 py-3 text-[#4b5563] hover:text-[#b90a5a] transition-all duration-200 hover:bg-gray-200">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-medium text-sm">대시보드</span>
+</div>
+<!-- Active Navigation: Sourcing -->
+<div class="flex items-center gap-3 px-4 py-3 bg-[#ffffff] text-[#b90a5a] rounded-r-full font-bold border-l-4 border-[#b90a5a] translate-x-1 transition-transform duration-200">
+<span class="material-symbols-outlined">language</span>
+<span class="font-bold text-sm">제품 소싱</span>
+</div>
+<div class="flex items-center gap-3 px-4 py-3 text-[#4b5563] hover:text-[#b90a5a] transition-all duration-200 hover:bg-gray-200">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-medium text-sm">상품 관리</span>
+</div>
+<div class="flex items-center gap-3 px-4 py-3 text-[#4b5563] hover:text-[#b90a5a] transition-all duration-200 hover:bg-gray-200">
+<span class="material-symbols-outlined">shopping_cart</span>
+<span class="font-medium text-sm">주문 내역</span>
+</div>
+<div class="flex items-center gap-3 px-4 py-3 text-[#4b5563] hover:text-[#b90a5a] transition-all duration-200 hover:bg-gray-200">
+<span class="material-symbols-outlined">sync</span>
+<span class="font-medium text-sm">스토어 연동</span>
+</div>
+<div class="flex items-center gap-3 px-4 py-3 text-[#4b5563] hover:text-[#b90a5a] transition-all duration-200 hover:bg-gray-200">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-medium text-sm">설정</span>
+</div>
+</nav>
+<div class="px-6 mt-auto">
+<button class="w-full bg-gradient-to-br from-[#b90a5a] to-[#ff4d8d] text-white py-3 rounded-lg font-bold shadow-lg shadow-primary/20 flex items-center justify-center gap-2 text-sm">
+<span class="material-symbols-outlined text-sm">add</span>
+                새 소싱 요청
+            </button>
+</div>
+</aside>
+<!-- TopNavBar Shell -->
+<header class="fixed top-0 right-0 left-64 h-16 z-40 bg-white/80 backdrop-blur-xl flex justify-between items-center px-8 border-b border-gray-100 font-['Manrope'] font-medium text-sm">
+<div class="flex items-center flex-1 max-w-2xl">
+<div class="relative w-full group">
+<span class="absolute left-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline">search</span>
+<input class="w-full pl-12 pr-4 py-2 bg-gray-100 border-none rounded-full focus:ring-2 focus:ring-primary/20 transition-all outline-none" placeholder="데이터베이스 검색..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6 text-[#4b5563]">
+<div class="flex items-center gap-2 px-3 py-1 bg-green-50 text-green-700 rounded-full text-[11px] font-bold border border-green-100">
+<span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                네이버 스마트스토어 동기화 중
+            </div>
+<span class="material-symbols-outlined cursor-pointer hover:text-[#b90a5a] transition-colors">notifications</span>
+<div class="flex items-center gap-3 cursor-pointer">
+<div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="사용자 프로필 사진" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxrY3j7XG-maU6dCi5noDfYh-dUy3lwI14K0RPUFtSnRbceBGvkWCQEZv5yzuJ9GHimZ2Ue-ZejorIw7dY_USMHOswh3c4Q8DolkRoC9M32FETdD-QEK-8p0NnLL5BD-iR-s2Ku4e8zpusmJjQkVSuQ8_5uQeoWwRpYoZf01JX2SkVYNu7ha_sqag4951MTfRXsMfuBeoUr8vvz0JkE2rzd5xxxO7bElM8K5mqskm3AQ2PoXOlqnEPqntDbnqn4okAD_-a038Qv6E"/>
+</div>
+<span class="font-bold text-gray-800">글로벌 매니저</span>
+</div>
+</div>
+</header>
+<!-- Global Supply Tracker (Ticker) -->
+<section class="fixed top-16 right-0 left-64 h-10 bg-gray-50 z-30 flex items-center border-b border-gray-100 overflow-hidden">
+<div class="flex whitespace-nowrap gap-12 px-8 animate-marquee text-[10px] font-label uppercase tracking-tighter text-secondary font-bold">
+<div class="flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                상하이 허브: 가용량 94%
+            </div>
+<div class="flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+                트렌드 알림: 북유럽 테크 미니멀리즘 (+24%)
+            </div>
+<div class="flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                알리익스프레스 API: 정상
+            </div>
+<div class="flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                글로벌 해상 운임: 0.4% 상승
+            </div>
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-[12px]" style="font-variation-settings: 'FILL' 1;">warning</span>
+                물류 지연 알림: 롱비치 항구
+            </div>
+<!-- Duplicated for seamless loop -->
+<div class="flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                상하이 허브: 가용량 94%
+            </div>
+<div class="flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+                트렌드 알림: 북유럽 테크 미니멀리즘 (+24%)
+            </div>
+</div>
+</section>
+<!-- Main Content Canvas -->
+<main class="pl-64 pt-28 min-h-screen">
+<div class="p-8 max-w-[1600px] mx-auto">
+<!-- Page Header Section -->
+<div class="mb-12 flex justify-between items-end">
+<div>
+<h2 class="text-4xl font-extrabold tracking-tighter mb-2 text-on-surface">제품 소싱</h2>
+<p class="text-on-surface-variant max-w-xl">글로벌 인벤토리 리드를 수집하고 검증하는 중앙 터미널입니다. 공급업체 URL을 입력하여 데이터를 수집하세요.</p>
+</div>
+<div class="flex gap-2">
+<button class="px-4 py-2 bg-white border border-gray-200 rounded-lg text-xs font-bold flex items-center gap-2 hover:bg-gray-50 transition-colors">
+<span class="material-symbols-outlined text-sm text-green-600">sync</span>
+                        스마트스토어 동기화 설정
+                    </button>
+</div>
+</div>
+<!-- URL Input & Collect Bar -->
+<div class="mb-10 p-2 bg-white rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.05)] border border-gray-100 flex gap-2">
+<div class="flex-1 flex items-center bg-gray-50 rounded-lg px-4 gap-3">
+<span class="material-symbols-outlined text-outline text-lg">link</span>
+<input class="bg-transparent border-none w-full py-4 text-sm font-medium focus:ring-0 outline-none" placeholder="https://www.aliexpress.com/item/..." type="text"/>
+</div>
+<button class="bg-gradient-to-br from-[#b90a5a] to-[#ff4d8d] text-white px-10 py-4 rounded-lg font-extrabold tracking-tight hover:brightness-110 transition-all flex items-center gap-2">
+<span class="material-symbols-outlined">add_circle</span>
+                    수집하기
+                </button>
+</div>
+<!-- Filter / Sort Bar -->
+<div class="flex flex-wrap items-center justify-between mb-8 gap-4">
+<div class="flex items-center gap-3">
+<button class="px-4 py-2 bg-gray-100 text-on-surface-variant rounded-full text-xs font-bold uppercase tracking-widest flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">filter_list</span> 필터
+                    </button>
+<div class="h-4 w-[1px] bg-gray-300"></div>
+<button class="px-4 py-2 text-[#b90a5a] bg-primary-fixed rounded-full text-xs font-bold">전체 소스</button>
+<button class="px-4 py-2 text-on-surface-variant hover:bg-gray-100 transition-colors rounded-full text-xs font-bold">알리익스프레스</button>
+<button class="px-4 py-2 text-on-surface-variant hover:bg-gray-100 transition-colors rounded-full text-xs font-bold">글로벌 소스</button>
+<div class="h-4 w-[1px] bg-gray-300"></div>
+<button class="px-4 py-2 text-[#03c75a] hover:bg-green-50 transition-colors rounded-full text-xs font-extrabold flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">storefront</span>
+                        네이버 연동 완료
+                    </button>
+</div>
+<div class="flex items-center gap-4">
+<p class="text-[10px] font-bold uppercase tracking-widest text-outline">정렬 기준:</p>
+<select class="bg-transparent border-none text-sm font-bold text-on-surface focus:ring-0 cursor-pointer">
+<option>최근 수집순</option>
+<option>가격: 낮은순</option>
+<option>가격: 높은순</option>
+<option>상태 우선순위</option>
+</select>
+</div>
+</div>
+<!-- Sourcing Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+<!-- Product Card 1 -->
+<div class="group bg-white rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl border border-gray-100 border-l-4 border-primary">
+<div class="relative h-56 overflow-hidden">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="고급 미니멀리스트 시계" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvgeCO48afm2KGoqmjjyo1fttLoQZ3pvQQ2UfLgZobaqpIGQcnbi3iHscF_tz3JoNhe2iNM2D-DkNvRGQy2Nbw3AZ_UF08miNdsoSveT6FI0jAhTF9wL7piWJnNX-OuaIFoHPMBh6_hvCANW2XI7i9PClpPjLw4ZFmxMV9hhSvCpNB0cEBVMoL3PvsPH5f_-UOnXnsxJDJizCAEjhEYkR5hB7qJWgd6udeSpsgW2xds4t9TUfqYjnrozIV--EvDqVKFU5jbacq0z0"/>
+<div class="absolute top-4 right-4 flex gap-2">
+<span class="px-3 py-1 rounded-full bg-primary-fixed text-primary text-[10px] font-bold uppercase tracking-widest shadow-sm">신규</span>
+</div>
+<div class="absolute bottom-4 left-4">
+<span class="px-2 py-1 glass-panel text-[9px] font-bold text-secondary uppercase tracking-widest rounded border border-gray-200">AliExpress</span>
+</div>
+</div>
+<div class="p-6">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-bold text-lg tracking-tight truncate">크로노스 미니멀리스트 V3</h3>
+<span class="material-symbols-outlined text-green-500 text-lg" title="네이버 스마트스토어 매핑됨">verified</span>
+</div>
+<p class="text-outline text-xs mb-4">SKU: CHR-9920-W</p>
+<div class="flex items-end justify-between mb-6">
+<div>
+<p class="text-[10px] font-bold text-outline uppercase tracking-widest">단가</p>
+<p class="text-2xl font-black text-on-surface">$12.45</p>
+</div>
+<div class="text-right">
+<p class="text-[10px] font-bold text-outline uppercase tracking-widest">최소주문수량</p>
+<p class="font-bold">50개</p>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="flex-1 py-2 bg-gray-800 text-white rounded-lg font-bold text-sm hover:bg-black transition-all">처리하기</button>
+<button class="px-3 py-2 bg-gray-100 text-on-surface-variant rounded-lg hover:bg-gray-200 transition-all">
+<span class="material-symbols-outlined text-sm">open_in_new</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Product Card 2 -->
+<div class="group bg-white rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl border border-gray-100">
+<div class="relative h-56 overflow-hidden">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="프로페셔널 헤드폰" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDOXXIfLBm-IthkM3js5aZJioCbBrhQit5gZ4_0eIa3Rj_i61rO7cxz_IPwEfGd2aCwcRRznPuGBRZfK3VpodjO2WMtd_rXZgDOW1t6YyIiFkO1yw-MGyYGQDOqcZ6mMnY3RuzECvKReAo3xeFTNHiRwEq-QpjuaZwKUr8YM8_MEZ1QTZAhyeX8V5htfsX-ipXMBN3KXidqDYXpy_nHQ3SxTOUTiwBkIHwVMPl7dei1jzRDM1SEdBQMUnZ389_lbnxpm7kCQuLTGAM"/>
+<div class="absolute top-4 right-4 flex gap-2">
+<span class="px-3 py-1 rounded-full bg-blue-100 text-blue-700 text-[10px] font-bold uppercase tracking-widest shadow-sm">진행중</span>
+</div>
+<div class="absolute bottom-4 left-4">
+<span class="px-2 py-1 glass-panel text-[9px] font-bold text-secondary uppercase tracking-widest rounded border border-gray-200">Global Sources</span>
+</div>
+</div>
+<div class="p-6">
+<h3 class="font-bold text-lg mb-1 tracking-tight truncate">소닉붐 ANC 팟즈</h3>
+<p class="text-outline text-xs mb-4">SKU: SND-AUD-202</p>
+<div class="flex items-end justify-between mb-6">
+<div>
+<p class="text-[10px] font-bold text-outline uppercase tracking-widest">단가</p>
+<p class="text-2xl font-black text-on-surface">$45.80</p>
+</div>
+<div class="text-right">
+<p class="text-[10px] font-bold text-outline uppercase tracking-widest">최소주문수량</p>
+<p class="font-bold">200개</p>
+</div>
+</div>
+<div class="flex gap-2 opacity-60">
+<button class="flex-1 py-2 bg-gray-200 text-gray-500 rounded-lg font-bold text-sm cursor-not-allowed">처리중...</button>
+<button class="px-3 py-2 bg-gray-100 text-on-surface-variant rounded-lg">
+<span class="material-symbols-outlined text-sm">open_in_new</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Product Card 3 -->
+<div class="group bg-white rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl border border-gray-100">
+<div class="relative h-56 overflow-hidden">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="기하학적 데스크 램프" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC7ZH5hu_OH-y8j4C_vKTAITwjx6FU9QARJBIcBSINFD9EylOnjKBnRKMmGtTiWccxTWamnxhtrh3L1Dn2e68nfr_4JMwRz3gjceh_CyG-44vmAs0JvEaY6jUiOfWNJEmyP86RBN9bvIYiuUsB7ZAspeUCoqvZ7tNhXbb_qMfQhjKVSG99EvoWXvWbQ2clHZUOtKBOO9MEtFiYfbeWLIMb759h6qWW5CYdlFgFpP7y8W5rM6DcVWfItAXBa4tX-l49rT73AdI2bGHM"/>
+<div class="absolute top-4 right-4 flex gap-2">
+<span class="px-3 py-1 rounded-full bg-red-100 text-red-600 text-[10px] font-bold uppercase tracking-widest shadow-sm">실패</span>
+</div>
+<div class="absolute bottom-4 left-4">
+<span class="px-2 py-1 glass-panel text-[9px] font-bold text-secondary uppercase tracking-widest rounded border border-gray-200">AliExpress</span>
+</div>
+</div>
+<div class="p-6">
+<h3 class="font-bold text-lg mb-1 tracking-tight truncate">프리즘 데스크 조명</h3>
+<p class="text-outline text-xs mb-4">SKU: LIT-DSK-990</p>
+<div class="flex items-end justify-between mb-6">
+<div>
+<p class="text-[10px] font-bold text-outline uppercase tracking-widest">단가</p>
+<p class="text-2xl font-black text-on-surface">$18.20</p>
+</div>
+<div class="text-right">
+<p class="text-[10px] font-bold text-outline uppercase tracking-widest">최소주문수량</p>
+<p class="font-bold">10개</p>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="flex-1 py-2 bg-[#b90a5a] text-white rounded-lg font-bold text-sm hover:brightness-110 transition-all">재시도</button>
+<button class="px-3 py-2 bg-gray-100 text-on-surface-variant rounded-lg hover:bg-gray-200 transition-all">
+<span class="material-symbols-outlined text-sm">delete</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Product Card 4 -->
+<div class="group bg-white rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl border border-gray-100 border-l-4 border-primary">
+<div class="relative h-56 overflow-hidden">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="투명 기계식 키보드" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBP3Ap1w7GiHqNhFR-nfJSrWtLyhJTL2LxWN2R5eL9vXFaqlxsPmutTElHa9iqjcCMm0Z5R7mnxL8r7Qt_TlYSqBpZanuuEcpFYfQEgu9nfH5HJzuDU-xOKytVb7hOL9zVCBFIt4sc54V2F_cJK5RFlUZkzOXV3MzdlVoDPyTvQ7LiJMXD9DISa4DwFP-QrmYfsBYeHjbCKplyf-oVoPJoRYXWyyO_u7GD0aM6l2_ejznWdQhufWgq6PbLzFY9NkMvmJb4gtK1Fa3k"/>
+<div class="absolute top-4 right-4 flex gap-2">
+<span class="px-3 py-1 rounded-full bg-primary-fixed text-primary text-[10px] font-bold uppercase tracking-widest shadow-sm">신규</span>
+</div>
+<div class="absolute bottom-4 left-4">
+<span class="px-2 py-1 glass-panel text-[9px] font-bold text-secondary uppercase tracking-widest rounded border border-gray-200">Global Sources</span>
+</div>
+</div>
+<div class="p-6">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-bold text-lg tracking-tight truncate">네온클릭 기계식 K1</h3>
+<button class="text-[10px] bg-green-50 text-green-700 px-2 py-0.5 rounded border border-green-200 font-bold">카테고리 매핑 대기</button>
+</div>
+<p class="text-outline text-xs mb-4">SKU: KBD-MCH-042</p>
+<div class="flex items-end justify-between mb-6">
+<div>
+<p class="text-[10px] font-bold text-outline uppercase tracking-widest">단가</p>
+<p class="text-2xl font-black text-on-surface">$89.00</p>
+</div>
+<div class="text-right">
+<p class="text-[10px] font-bold text-outline uppercase tracking-widest">최소주문수량</p>
+<p class="font-bold">25개</p>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="flex-1 py-2 bg-gray-800 text-white rounded-lg font-bold text-sm hover:bg-black transition-all">처리하기</button>
+<button class="px-3 py-2 bg-gray-100 text-on-surface-variant rounded-lg hover:bg-gray-200 transition-all">
+<span class="material-symbols-outlined text-sm">open_in_new</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Pagination/Footer Stats -->
+<div class="mt-12 pt-8 border-t border-gray-200 flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="text-sm font-medium text-on-surface-variant">
+                    소싱 리드 <span class="text-on-surface font-bold">154</span>개 중 <span class="text-primary font-bold">1-12</span> 표시
+                </div>
+<div class="flex items-center gap-2">
+<button class="w-10 h-10 flex items-center justify-center rounded-lg bg-gray-100 text-outline hover:text-primary transition-all">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-lg bg-primary text-white font-bold">1</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-lg bg-gray-100 hover:bg-gray-200 transition-all font-bold">2</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-lg bg-gray-100 hover:bg-gray-200 transition-all font-bold">3</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-lg bg-gray-100 text-outline hover:text-primary transition-all">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+<!-- FAB Contextual Action -->
+<button class="fixed bottom-8 right-8 w-14 h-14 bg-[#b90a5a] text-white rounded-full shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all z-50">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">bolt</span>
+</button>
+</body></html>
