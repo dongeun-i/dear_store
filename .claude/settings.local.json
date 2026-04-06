@@ -3,7 +3,10 @@
     "allow": [
       "Bash(find /Users/eundong/Dev/dear_store -name *.sql -o -name schema* -o -name migrations -type d)",
       "Bash(docker exec:*)",
-      "Bash(pnpm db:migrate)"
+      "Bash(pnpm db:migrate)",
+      "Bash(psql postgresql://dearstore:dearstore@localhost:5432/dearstore -f apps/web/db/migrations/0002_product_extended_fields.sql)",
+      "Bash(docker compose:*)",
+      "Bash(docker compose exec postgres psql -U dearstore -d dearstore -c ':*)"
     ]
   }
 }

@@ -15,32 +15,56 @@ async def upsert_product(conn: asyncpg.Connection, product: dict) -> str:
         """
         INSERT INTO products (
             ali_product_id,
+            source_url,
             title_original,
             original_price,
+            sale_price,
             currency,
             images,
             desc_images,
             options,
+            variants,
+            specs,
+            stock,
+            orders,
+            ratings,
+            store_info,
             status,
             updated_at
-        ) VALUES ($1, $2, $3, $4, $5, $6, $7, 'raw', NOW())
+        ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,'raw',NOW())
         ON CONFLICT (ali_product_id) DO UPDATE SET
+            source_url     = EXCLUDED.source_url,
             title_original = EXCLUDED.title_original,
             original_price = EXCLUDED.original_price,
+            sale_price     = EXCLUDED.sale_price,
             currency       = EXCLUDED.currency,
             images         = EXCLUDED.images,
             desc_images    = EXCLUDED.desc_images,
             options        = EXCLUDED.options,
+            variants       = EXCLUDED.variants,
+            specs          = EXCLUDED.specs,
+            stock          = EXCLUDED.stock,
+            orders         = EXCLUDED.orders,
+            ratings        = EXCLUDED.ratings,
+            store_info     = EXCLUDED.store_info,
             updated_at     = NOW()
         RETURNING id
         """,
         product["ali_product_id"],
+        product.get("source_url"),
         product["title"],
-        product["price_min"],
+        product.get("price_min"),
+        product.get("sale_price_min"),
         product["currency"],
         json.dumps(product["images"]),
         json.dumps(product.get("desc_images", [])),
-        json.dumps(product["options"]),
+        json.dumps(product.get("options", [])),
+        json.dumps(product.get("variants", [])),
+        json.dumps(product.get("specs", [])),
+        product.get("stock", 0),
+        str(product.get("orders", "0")),
+        json.dumps(product.get("ratings")),
+        json.dumps(product.get("store_info")),
     )
     return str(row["id"])
 

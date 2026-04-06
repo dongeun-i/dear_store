@@ -19,7 +19,7 @@ export default function ProductCard({ product }: Props) {
   return (
     <Link
       href={`/sourcing/${product.id}`}
-      className="group block bg-white rounded-xl overflow-hidden border border-gray-100 hover:border-gray-200 hover:shadow-sm transition-all duration-200"
+      className="group block bg-white rounded-xl overflow-hidden border border-gray-200 hover:border-gray-200 hover:shadow-sm transition-all duration-200"
     >
       {/* Thumbnail */}
       <div className="aspect-square bg-gray-50 overflow-hidden">

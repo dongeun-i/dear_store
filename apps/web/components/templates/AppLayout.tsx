@@ -11,7 +11,7 @@ export default function AppLayout({ children, header }: Props) {
       <Sidebar />
 
       {/* Fixed header */}
-      <header className="fixed top-0 right-0 left-56 h-14 z-40 bg-white flex items-center justify-between px-6 border-b border-gray-100">
+      <header className="fixed top-0 right-0 left-56 h-14 z-40 bg-white flex items-center justify-between px-6 border-b border-gray-200">
         {header ?? <div />}
         <div className="flex items-center gap-3">
           <div className="w-7 h-7 rounded-full bg-gray-900 flex items-center justify-center">

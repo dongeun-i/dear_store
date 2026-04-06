@@ -78,7 +78,7 @@ export default function SourcingPage() {
       <div className="space-y-5">
 
         {/* URL 입력 */}
-        <div className="bg-white rounded-xl p-4 border border-gray-100">
+        <div className="bg-white rounded-xl p-4 border border-gray-200">
           <form onSubmit={handleSubmit} className="flex gap-3">
             <div className="flex-1">
               <Input
