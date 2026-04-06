@@ -52,6 +52,7 @@ export default function ProductDetailPage() {
   const [statusLoading, setStatusLoading] = useState(false)
   const [deleteConfirm, setDeleteConfirm] = useState(false)
   const [deleting, setDeleting] = useState(false)
+  const [translating, setTranslating] = useState(false)
 
   // 인라인 편집
   const [editField, setEditField] = useState<'titleKo' | 'categoryKo' | null>(null)
@@ -110,6 +111,17 @@ export default function ProductDetailPage() {
     }
   }
 
+  async function handleTranslate() {
+    setTranslating(true)
+    try {
+      const res = await fetch(`/api/products/${id}/translate`, { method: 'POST' })
+      const json = await res.json()
+      if (res.ok) setProduct(json.data)
+    } finally {
+      setTranslating(false)
+    }
+  }
+
   async function handleDelete() {
     setDeleting(true)
     try {
@@ -141,6 +153,17 @@ export default function ProductDetailPage() {
 
           {product && (
             <div className="flex items-center gap-2">
+              <button
+                onClick={handleTranslate}
+                disabled={translating}
+                className="flex items-center gap-1.5 text-xs font-medium text-white bg-gradient-to-r from-[#b90a5a] to-[#ff4d8d] hover:opacity-90 disabled:opacity-60 px-3 py-1.5 rounded-lg transition-opacity"
+              >
+                {translating ? (
+                  <><Spinner size="sm" className="border-white border-t-transparent" /> 번역 중...</>
+                ) : (
+                  <><Icon name="auto_awesome" size="sm" /> AI 번역</>
+                )}
+              </button>
               {deleteConfirm ? (
                 <>
                   <span className="text-xs text-gray-500">정말 삭제할까요?</span>

@@ -6,7 +6,9 @@
       "Bash(pnpm db:migrate)",
       "Bash(psql postgresql://dearstore:dearstore@localhost:5432/dearstore -f apps/web/db/migrations/0002_product_extended_fields.sql)",
       "Bash(docker compose:*)",
-      "Bash(docker compose exec postgres psql -U dearstore -d dearstore -c ':*)"
+      "Bash(docker compose exec postgres psql -U dearstore -d dearstore -c ':*)",
+      "Bash(ollama list:*)",
+      "Bash(ollama pull:*)"
     ]
   }
 }
