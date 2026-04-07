@@ -37,7 +37,10 @@ export default function DashboardPage() {
     try {
       const res = await fetch('/api/dashboard/stats')
       const json = await res.json()
-      setStats(json.data)
+      setStats(prev => {
+        const next = json.data
+        return JSON.stringify(prev) === JSON.stringify(next) ? prev : next
+      })
     } finally {
       setLoading(false)
     }
@@ -72,24 +75,28 @@ export default function DashboardPage() {
                 value={stats?.products.total ?? 0}
                 sub="수집된 전체 상품"
                 accent
+                href="/products"
               />
               <KpiCard
                 icon="today"
                 label="오늘 수집"
                 value={stats?.jobs.todayDone ?? 0}
                 sub="완료된 수집 건수"
+                href="/sourcing"
               />
               <KpiCard
                 icon="sync"
                 label="수집 중"
                 value={stats?.jobs.active ?? 0}
                 sub="진행 중인 잡"
+                href="/sourcing"
               />
               <KpiCard
                 icon="error_outline"
                 label="오늘 실패"
                 value={stats?.jobs.todayFailed ?? 0}
                 sub="실패한 수집 건수"
+                href="/sourcing"
               />
             </div>
 
@@ -100,22 +107,22 @@ export default function DashboardPage() {
                 <p className="text-xs font-semibold text-gray-600 mb-4">상품 현황</p>
                 <div className="space-y-3">
                   {[
-                    { label: 'RAW (미편집)',  value: stats?.products.raw ?? 0,      color: 'bg-gray-200' },
-                    { label: '편집됨',         value: stats?.products.edited ?? 0,   color: 'bg-[#b7eaff]' },
-                    { label: '마켓 등록됨',    value: stats?.products.uploaded ?? 0, color: 'bg-[#ffd9e0]' },
-                  ].map(({ label, value, color }) => {
+                    { label: 'RAW (미편집)',  value: stats?.products.raw ?? 0,      color: 'bg-gray-200',   href: '/products?status=raw' },
+                    { label: '편집됨',         value: stats?.products.edited ?? 0,   color: 'bg-[#b7eaff]',  href: '/products?status=edited' },
+                    { label: '마켓 등록됨',    value: stats?.products.uploaded ?? 0, color: 'bg-[#ffd9e0]',  href: '/products?status=uploaded' },
+                  ].map(({ label, value, color, href }) => {
                     const total = stats?.products.total ?? 0
                     const pct = total > 0 ? Math.round((value / total) * 100) : 0
                     return (
-                      <div key={label}>
+                      <Link key={label} href={href} className="block group">
                         <div className="flex items-center justify-between mb-1">
-                          <span className="text-xs text-gray-500">{label}</span>
+                          <span className="text-xs text-gray-500 group-hover:text-gray-800 transition-colors">{label}</span>
                           <span className="text-xs font-semibold text-gray-700">{value.toLocaleString()}</span>
                         </div>
                         <div className="h-1.5 bg-gray-200 rounded-full overflow-hidden">
                           <div className={`h-full ${color} rounded-full transition-all duration-500`} style={{ width: `${pct}%` }} />
                         </div>
-                      </div>
+                      </Link>
                     )
                   })}
                 </div>
