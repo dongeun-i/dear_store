@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import Icon from '@/components/atoms/Icon'
 
 interface Props {
@@ -6,11 +7,12 @@ interface Props {
   value: number | string
   sub?: string
   accent?: boolean
+  href?: string
 }
 
-export default function KpiCard({ icon, label, value, sub, accent = false }: Props) {
-  return (
-    <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-5">
+export default function KpiCard({ icon, label, value, sub, accent = false, href }: Props) {
+  const inner = (
+    <div className={`bg-white rounded-xl border border-gray-200 shadow-sm p-5 ${href ? 'hover:border-gray-300 hover:shadow transition-all cursor-pointer' : ''}`}>
       <div className="flex items-center justify-between mb-4">
         <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">{label}</span>
         <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${accent ? 'bg-[#ffd9e0]' : 'bg-gray-100'}`}>
@@ -23,4 +25,6 @@ export default function KpiCard({ icon, label, value, sub, accent = false }: Pro
       {sub && <p className="text-xs text-gray-400 mt-1">{sub}</p>}
     </div>
   )
+
+  return href ? <Link href={href}>{inner}</Link> : inner
 }

@@ -9,9 +9,9 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
 const base = 'inline-flex items-center justify-center gap-2 font-semibold rounded-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed'
 
 const variants = {
-  primary: 'bg-gradient-to-br from-[#b90a5a] to-[#ff4d8d] text-white shadow-card hover:shadow-float hover:scale-[1.02]',
-  secondary: 'bg-[#00ccf9] text-[#005266] hover:bg-[#00D1FF]',
-  tertiary: 'bg-transparent text-[#b90a5a] hover:bg-[#ffd9e0]/40',
+  primary: 'bg-gray-900 text-white hover:bg-gray-700',
+  secondary: 'bg-gray-100 text-gray-700 hover:bg-gray-200',
+  tertiary: 'bg-transparent text-gray-500 hover:text-gray-800 hover:bg-gray-100',
 }
 
 const sizes = {

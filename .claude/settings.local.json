@@ -6,7 +6,13 @@
       "Bash(pnpm db:migrate)",
       "Bash(psql postgresql://dearstore:dearstore@localhost:5432/dearstore -f apps/web/db/migrations/0002_product_extended_fields.sql)",
       "Bash(docker compose:*)",
-      "Bash(docker compose exec postgres psql -U dearstore -d dearstore -c ':*)"
+      "Bash(docker compose exec postgres psql -U dearstore -d dearstore -c ':*)",
+      "Bash(ollama list:*)",
+      "Bash(ollama pull:*)",
+      "Bash(curl -s http://localhost:11434/api/tags)",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\([m['name'] for m in d.get\\('models',[]\\)]\\)\")",
+      "Bash(wait)",
+      "Bash(python3 -)"
     ]
   }
 }
