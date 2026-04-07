@@ -8,6 +8,7 @@ import StatusChip from '@/components/atoms/StatusChip'
 import Button from '@/components/atoms/Button'
 import Icon from '@/components/atoms/Icon'
 import Spinner from '@/components/atoms/Spinner'
+import InfoRow from '@/components/atoms/InfoRow'
 
 type ProductStatus = 'raw' | 'edited' | 'uploaded'
 
@@ -33,6 +34,7 @@ type Product = {
   ratings: Rating | null
   storeInfo: StoreInfo | null
   categoryAli: string | null
+  categoryKo: string | null
   status: ProductStatus
   createdAt: string
 }
@@ -50,7 +52,6 @@ export default function ProductDetailPage() {
   const [selectedImg, setSelectedImg] = useState(0)
   const [loading, setLoading] = useState(true)
   const [statusLoading, setStatusLoading] = useState(false)
-  const [deleteConfirm, setDeleteConfirm] = useState(false)
   const [deleting, setDeleting] = useState(false)
   const [translating, setTranslating] = useState(false)
 
@@ -129,7 +130,6 @@ export default function ProductDetailPage() {
       if (res.ok) router.push('/sourcing')
     } finally {
       setDeleting(false)
-      setDeleteConfirm(false)
     }
   }
 
@@ -141,57 +141,16 @@ export default function ProductDetailPage() {
       header={
         <div className="flex items-center justify-between w-full">
           <div className="flex items-center gap-2 text-sm">
-            <Link href="/sourcing" className="text-gray-400 hover:text-gray-600 flex items-center gap-1">
+            <Link href="/sourcing" className="text-gray-600 hover:text-gray-900 flex items-center gap-1 font-medium">
               <Icon name="arrow_back" size="sm" />
               소싱
             </Link>
-            <span className="text-gray-200">/</span>
-            <span className="text-gray-700 font-medium truncate max-w-xs">
+            <span className="text-gray-300">/</span>
+            <span className="text-gray-500 truncate max-w-xs">
               {product?.titleOriginal ?? '상품 상세'}
             </span>
           </div>
 
-          {product && (
-            <div className="flex items-center gap-2">
-              <button
-                onClick={handleTranslate}
-                disabled={translating}
-                className="flex items-center gap-1.5 text-xs font-medium text-white bg-gradient-to-r from-[#b90a5a] to-[#ff4d8d] hover:opacity-90 disabled:opacity-60 px-3 py-1.5 rounded-lg transition-opacity"
-              >
-                {translating ? (
-                  <><Spinner size="sm" className="border-white border-t-transparent" /> 번역 중...</>
-                ) : (
-                  <><Icon name="auto_awesome" size="sm" /> AI 번역</>
-                )}
-              </button>
-              {deleteConfirm ? (
-                <>
-                  <span className="text-xs text-gray-500">정말 삭제할까요?</span>
-                  <button
-                    onClick={handleDelete}
-                    disabled={deleting}
-                    className="text-xs font-semibold text-white bg-red-500 hover:bg-red-600 px-3 py-1.5 rounded-lg transition-colors"
-                  >
-                    {deleting ? '삭제 중...' : '삭제'}
-                  </button>
-                  <button
-                    onClick={() => setDeleteConfirm(false)}
-                    className="text-xs text-gray-400 hover:text-gray-600 px-2 py-1.5"
-                  >
-                    취소
-                  </button>
-                </>
-              ) : (
-                <button
-                  onClick={() => setDeleteConfirm(true)}
-                  className="flex items-center gap-1 text-xs text-gray-400 hover:text-red-500 transition-colors px-2 py-1.5 rounded-lg hover:bg-red-50"
-                >
-                  <Icon name="delete" size="sm" />
-                  삭제
-                </button>
-              )}
-            </div>
-          )}
         </div>
       }
     >
@@ -208,14 +167,31 @@ export default function ProductDetailPage() {
           </Link>
         </div>
       ) : (
-        <div className="space-y-6">
+        <div className="space-y-6 max-w-5xl mx-auto">
 
-          {/* 상단: 이미지 + 정보 */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div className="flex gap-6 items-start">
 
-            {/* 이미지 갤러리 */}
-            <div className="space-y-3">
-              <div className="bg-white rounded-xl border border-gray-200 overflow-hidden aspect-square">
+            <div className="w-[420px] shrink-0 flex gap-3">
+
+              {images.length > 1 && (
+                <div className="flex flex-col gap-2 overflow-y-auto max-h-[420px] scrollbar-hide">
+                  {images.map((src, i) => (
+                    <button
+                      key={i}
+                      onClick={() => setSelectedImg(i)}
+                      className={`w-[70px] h-[70px] rounded-xl overflow-hidden shrink-0 border-2 transition-all ${
+                        i === selectedImg
+                          ? 'border-[#b90a5a]'
+                          : 'border-gray-100 hover:border-gray-300'
+                      }`}
+                    >
+                      <img src={src} alt="" className="w-full h-full object-cover" />
+                    </button>
+                  ))}
+                </div>
+              )}
+
+              <div className="flex-1 bg-white rounded-2xl border border-gray-200 overflow-hidden aspect-square">
                 {images[selectedImg] ? (
                   <img
                     src={images[selectedImg]}
@@ -230,32 +206,15 @@ export default function ProductDetailPage() {
                 )}
               </div>
 
-              {images.length > 1 && (
-                <div className="flex gap-2 flex-wrap">
-                  {images.map((src, i) => (
-                    <button
-                      key={i}
-                      onClick={() => setSelectedImg(i)}
-                      className={`w-14 h-14 rounded-lg overflow-hidden border-2 transition-all ${
-                        i === selectedImg
-                          ? 'border-[#b90a5a]'
-                          : 'border-transparent hover:border-gray-200'
-                      }`}
-                    >
-                      <img src={src} alt="" className="w-full h-full object-cover" />
-                    </button>
-                  ))}
-                </div>
-              )}
             </div>
 
             {/* 상품 정보 */}
-            <div className="space-y-5">
+            <div className="flex-1 min-w-0 space-y-6 py-1">
 
               {/* 상태 + 제목 */}
-              <div className="space-y-2">
+              <div className="space-y-3">
                 <StatusChip status={product.status} />
-                <h1 className="text-base font-semibold text-gray-900 leading-snug">
+                <h1 className="text-lg font-bold text-gray-900 leading-snug">
                   {product.titleOriginal}
                 </h1>
 
@@ -278,52 +237,63 @@ export default function ProductDetailPage() {
                     </button>
                   </div>
                 ) : (
-                  <button
-                    onClick={() => startEdit('titleKo')}
-                    className="group flex items-center gap-1.5 text-left"
-                  >
+                  <button onClick={() => startEdit('titleKo')} className="group flex items-center gap-1.5 text-left w-full">
                     <span className={`text-sm ${product.titleKo ? 'text-gray-500' : 'text-gray-300 italic'}`}>
                       {product.titleKo ?? '한국어 제목 추가...'}
                     </span>
-                    <Icon name="edit" size="sm" className="text-gray-300 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <Icon name="edit" size="sm" className="text-gray-300 opacity-0 group-hover:opacity-100 transition-opacity shrink-0" />
                   </button>
                 )}
               </div>
 
               {/* 가격 */}
               {product.originalPrice && (
-                <div>
-                  <p className="text-xs text-gray-400 mb-1">원가</p>
-                  <div className="flex items-baseline gap-2">
-                    <p className="text-2xl font-bold text-gray-900">
-                      {Number(product.originalPrice).toLocaleString()}
-                      <span className="text-sm font-normal text-gray-400 ml-1.5">{product.currency}</span>
-                    </p>
+                <div className="border-t border-gray-100 pt-5">
+                  <div className="flex items-baseline gap-3">
                     {product.salePrice && Number(product.salePrice) < Number(product.originalPrice) && (
-                      <p className="text-base font-semibold text-[#b90a5a]">
-                        → {Number(product.salePrice).toLocaleString()}
-                      </p>
+                      <span className="text-2xl font-bold text-[#b90a5a]">
+                        {Number(product.salePrice).toLocaleString()}
+                        <span className="text-sm font-normal ml-1">{product.currency}</span>
+                      </span>
                     )}
+                    <span className={`font-bold ${product.salePrice && Number(product.salePrice) < Number(product.originalPrice) ? 'text-base text-gray-400 line-through' : 'text-2xl text-gray-900'}`}>
+                      {Number(product.originalPrice).toLocaleString()}
+                      <span className="text-sm font-normal ml-1">{product.currency}</span>
+                    </span>
                   </div>
                   {product.orders && (
-                    <p className="text-xs text-gray-400 mt-1">판매 {product.orders}건</p>
+                    <p className="text-xs text-gray-400 mt-1.5">판매 {product.orders}건</p>
                   )}
                 </div>
               )}
 
+              {/* 평점 */}
+              {product.ratings && (
+                <div className="flex items-center gap-2 border-t border-gray-100 pt-5">
+                  <span className="text-xl font-bold text-gray-900">{product.ratings.average}</span>
+                  <div className="flex gap-0.5">
+                    {[1,2,3,4,5].map(s => (
+                      <Icon key={s} name="star" size="sm" filled
+                        className={Number(product.ratings!.average) >= s ? 'text-amber-400' : 'text-gray-200'} />
+                    ))}
+                  </div>
+                  <span className="text-xs text-gray-400">({product.ratings.total_count.toLocaleString()}개 리뷰)</span>
+                </div>
+              )}
+
               {/* 상태 변경 */}
-              <div>
-                <p className="text-xs text-gray-400 mb-2">상태 변경</p>
+              <div className="border-t border-gray-100 pt-5 space-y-3">
+                <p className="text-xs font-medium text-gray-400">상태 변경</p>
                 <div className="flex gap-2">
                   {STATUS_FLOW.map(s => (
                     <button
                       key={s.value}
                       onClick={() => handleStatusChange(s.value)}
                       disabled={statusLoading}
-                      className={`flex-1 py-2 rounded-lg text-xs font-semibold border transition-all duration-150 ${
+                      className={`flex-1 py-2.5 rounded-xl text-xs font-semibold border transition-all duration-150 ${
                         product.status === s.value
-                          ? 'bg-gray-900 text-white border-gray-900'
-                          : 'bg-white text-gray-400 border-gray-200 hover:border-gray-400 hover:text-gray-700'
+                          ? 'bg-[#b90a5a] text-white border-[#b90a5a]'
+                          : 'bg-white text-gray-400 border-gray-200 hover:border-gray-300 hover:text-gray-600'
                       }`}
                     >
                       {statusLoading && product.status === s.value
@@ -333,102 +303,87 @@ export default function ProductDetailPage() {
                     </button>
                   ))}
                 </div>
+                <button
+                  onClick={handleTranslate}
+                  disabled={translating}
+                  className="w-full py-2.5 text-xs text-gray-500 hover:text-gray-800 disabled:opacity-50 rounded-xl border border-gray-200 hover:border-gray-300 bg-white transition-colors"
+                >
+                  {translating ? '번역 중...' : 'AI 번역'}
+                </button>
               </div>
-
-              {/* 평점 */}
-              {product.ratings && (
-                <div className="bg-white rounded-xl border border-gray-200 p-4">
-                  <div className="flex items-center gap-3">
-                    <div className="text-center">
-                      <p className="text-2xl font-bold text-gray-900">{product.ratings.average}</p>
-                      <div className="flex gap-0.5 mt-1">
-                        {[1,2,3,4,5].map(s => (
-                          <Icon key={s} name="star" size="sm" filled
-                            className={Number(product.ratings!.average) >= s ? 'text-amber-400' : 'text-gray-200'} />
-                        ))}
-                      </div>
-                      <p className="text-[10px] text-gray-400 mt-1">{product.ratings.total_count.toLocaleString()}개 리뷰</p>
-                    </div>
-                    <div className="flex-1 space-y-1">
-                      {[
-                        { label: '5★', val: product.ratings.five_star },
-                        { label: '4★', val: product.ratings.four_star },
-                      ].map(r => (
-                        <div key={r.label} className="flex items-center gap-2">
-                          <span className="text-[10px] text-gray-400 w-4">{r.label}</span>
-                          <div className="flex-1 h-1.5 bg-gray-100 rounded-full overflow-hidden">
-                            <div
-                              className="h-full bg-amber-400 rounded-full"
-                              style={{ width: product.ratings!.total_count > 0 ? `${Math.round((r.val / product.ratings!.total_count) * 100)}%` : '0%' }}
-                            />
-                          </div>
-                          <span className="text-[10px] text-gray-400 w-6 text-right">{r.val}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              )}
 
               {/* 기본 정보 */}
-              <div className="bg-white rounded-xl border border-gray-200 divide-y divide-gray-50">
-                <InfoRow label="알리 상품 ID" value={product.aliProductId} />
-                {product.storeInfo?.name && (
-                  <InfoRow label="판매자" value={
-                    <span className="flex items-center gap-1">
-                      {product.storeInfo.name}
-                      {product.storeInfo.is_top_rated && (
-                        <Icon name="verified" size="sm" className="text-[#b90a5a]" />
-                      )}
-                    </span>
-                  } />
-                )}
-                {product.stock > 0 && <InfoRow label="재고" value={`${product.stock.toLocaleString()}개`} />}
-                {product.categoryAli && <InfoRow label="원본 카테고리" value={product.categoryAli} />}
-                <div className="flex items-center justify-between gap-4 px-4 py-3">
-                  <span className="text-xs text-gray-400 shrink-0">한국 카테고리</span>
-                  {editField === 'categoryKo' ? (
-                    <div className="flex items-center gap-2 flex-1 justify-end">
-                      <input
-                        ref={editField === 'categoryKo' ? editRef : undefined}
-                        value={editValue}
-                        onChange={e => setEditValue(e.target.value)}
-                        onKeyDown={e => { if (e.key === 'Enter') saveEdit(); if (e.key === 'Escape') setEditField(null) }}
-                        placeholder="카테고리 입력..."
-                        className="w-40 text-xs bg-gray-50 border border-gray-200 rounded-lg px-2 py-1 outline-none focus:ring-2 focus:ring-gray-900/10"
-                      />
-                      <button onClick={saveEdit} disabled={saving} className="text-[#b90a5a]">
-                        {saving ? <Spinner size="sm" /> : <Icon name="check" size="sm" />}
-                      </button>
-                      <button onClick={() => setEditField(null)} className="text-gray-300">
-                        <Icon name="close" size="sm" />
-                      </button>
-                    </div>
-                  ) : (
-                    <button onClick={() => startEdit('categoryKo')} className="group flex items-center gap-1">
-                      <span className={`text-xs ${product.categoryKo ? 'text-gray-700' : 'text-gray-300 italic'}`}>
-                        {product.categoryKo ?? '추가...'}
+              <div className="border-t border-gray-100 pt-5 space-y-3">
+                <p className="text-xs font-medium text-gray-400">상품 정보</p>
+                <div className="bg-white rounded-xl border border-gray-200 divide-y divide-gray-50">
+                  <InfoRow label="알리 상품 ID" value={product.aliProductId} />
+                  {product.storeInfo?.name && (
+                    <InfoRow label="판매자" value={
+                      <span className="flex items-center gap-1">
+                        {product.storeInfo.name}
+                        {product.storeInfo.is_top_rated && (
+                          <Icon name="verified" size="sm" className="text-[#b90a5a]" />
+                        )}
                       </span>
-                      <Icon name="edit" size="sm" className="text-gray-300 opacity-0 group-hover:opacity-100 transition-opacity" />
-                    </button>
+                    } />
                   )}
-                </div>
-                <InfoRow label="이미지" value={`${images.length}장 / 상세 ${descImages.length}장`} />
-                <InfoRow label="수집일" value={new Date(product.createdAt).toLocaleString('ko-KR')} />
-                <InfoRow
-                  label="원본"
-                  value={
-                    <a
-                      href={product.sourceUrl ?? `https://www.aliexpress.com/item/${product.aliProductId}.html`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-1 text-[#b90a5a] hover:underline"
+                  {product.stock > 0 && <InfoRow label="재고" value={`${product.stock.toLocaleString()}개`} />}
+                  {product.categoryAli && <InfoRow label="원본 카테고리" value={product.categoryAli} />}
+                  <div className="flex items-center justify-between gap-4 px-4 py-3">
+                    <span className="text-xs text-gray-400 shrink-0">한국 카테고리</span>
+                    {editField === 'categoryKo' ? (
+                      <div className="flex items-center gap-2 flex-1 justify-end">
+                        <input
+                          ref={editRef}
+                          value={editValue}
+                          onChange={e => setEditValue(e.target.value)}
+                          onKeyDown={e => { if (e.key === 'Enter') saveEdit(); if (e.key === 'Escape') setEditField(null) }}
+                          placeholder="카테고리 입력..."
+                          className="w-40 text-xs bg-gray-50 border border-gray-200 rounded-lg px-2 py-1 outline-none focus:ring-2 focus:ring-gray-900/10"
+                        />
+                        <button onClick={saveEdit} disabled={saving} className="text-[#b90a5a]">
+                          {saving ? <Spinner size="sm" /> : <Icon name="check" size="sm" />}
+                        </button>
+                        <button onClick={() => setEditField(null)} className="text-gray-300">
+                          <Icon name="close" size="sm" />
+                        </button>
+                      </div>
+                    ) : (
+                      <button onClick={() => startEdit('categoryKo')} className="group flex items-center gap-1">
+                        <span className={`text-xs ${product.categoryKo ? 'text-gray-700' : 'text-gray-300 italic'}`}>
+                          {product.categoryKo ?? '추가...'}
+                        </span>
+                        <Icon name="edit" size="sm" className="text-gray-300 opacity-0 group-hover:opacity-100 transition-opacity" />
+                      </button>
+                    )}
+                  </div>
+                  <InfoRow label="이미지" value={`${images.length}장 / 상세 ${descImages.length}장`} />
+                  <InfoRow label="수집일" value={new Date(product.createdAt).toLocaleString('ko-KR')} />
+                  <InfoRow
+                    label="원본"
+                    value={
+                      <a
+                        href={product.sourceUrl ?? `https://www.aliexpress.com/item/${product.aliProductId}.html`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-1 text-[#b90a5a] hover:underline"
+                      >
+                        열기 <Icon name="open_in_new" size="sm" />
+                      </a>
+                    }
+                  />
+                  <div className="px-4 py-3">
+                    <button
+                      onClick={handleDelete}
+                      disabled={deleting}
+                      className="text-xs text-gray-400 hover:text-red-500 disabled:opacity-50 transition-colors"
                     >
-                      열기 <Icon name="open_in_new" size="sm" />
-                    </a>
-                  }
-                />
+                      {deleting ? '삭제 중...' : '이 상품 삭제'}
+                    </button>
+                  </div>
+                </div>
               </div>
+
             </div>
           </div>
 
@@ -481,11 +436,3 @@ export default function ProductDetailPage() {
   )
 }
 
-function InfoRow({ label, value }: { label: string; value: React.ReactNode }) {
-  return (
-    <div className="flex items-center justify-between gap-4 px-4 py-3">
-      <span className="text-xs text-gray-400 shrink-0">{label}</span>
-      <span className="text-xs text-gray-700 text-right">{value}</span>
-    </div>
-  )
-}

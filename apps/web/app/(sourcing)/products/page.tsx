@@ -1,7 +1,7 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
-import Link from 'next/link'
+import { useState, useEffect, useCallback, Suspense } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import AppLayout from '@/components/templates/AppLayout'
 import StatusChip from '@/components/atoms/StatusChip'
 import Icon from '@/components/atoms/Icon'
@@ -36,9 +36,20 @@ const STATUS_TABS: { value: ProductStatus | 'all'; label: string }[] = [
 ]
 
 export default function ProductsPage() {
+  return (
+    <Suspense>
+      <ProductsContent />
+    </Suspense>
+  )
+}
+
+function ProductsContent() {
+  const router = useRouter()
+  const searchParams = useSearchParams()
   const [products, setProducts] = useState<Product[]>([])
   const [loading, setLoading] = useState(true)
-  const [tab, setTab] = useState<ProductStatus | 'all'>('all')
+  const initialTab = (searchParams.get('status') as ProductStatus | null) ?? 'all'
+  const [tab, setTab] = useState<ProductStatus | 'all'>(initialTab)
   const [search, setSearch] = useState('')
   const [deleteState, setDeleteState] = useState<DeleteState>(null)
 
@@ -56,7 +67,8 @@ export default function ProductsPage() {
 
   useEffect(() => { fetchProducts() }, [fetchProducts])
 
-  async function handleDelete(id: string) {
+  async function handleDelete(e: React.MouseEvent, id: string) {
+    e.stopPropagation()
     setDeleteState({ id, step: 'deleting' })
     try {
       const res = await fetch(`/api/products/${id}`, { method: 'DELETE' })
@@ -93,7 +105,6 @@ export default function ProductsPage() {
 
         {/* 필터 바 */}
         <div className="flex items-center gap-3">
-          {/* 탭 */}
           <div className="flex bg-white border border-gray-200 rounded-lg p-1 gap-0.5">
             {STATUS_TABS.map(t => (
               <button
@@ -110,8 +121,7 @@ export default function ProductsPage() {
             ))}
           </div>
 
-          {/* 검색 */}
-          <div className="relative flex-1 max-w-xs">
+          <div className="relative flex-1 max-w-sm">
             <Icon name="search" size="sm" className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
             <input
               type="text"
@@ -140,24 +150,27 @@ export default function ProductsPage() {
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-gray-100 bg-gray-50">
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 w-12">#</th>
+                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 w-10">#</th>
                   <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500">상품</th>
                   <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 w-28">원가</th>
                   <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 w-20">판매수</th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 w-20">평점</th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 w-24">재고</th>
+                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 w-24">평점</th>
+                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 w-20">재고</th>
                   <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 w-24">상태</th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 w-28">수집일</th>
-                  <th className="w-20" />
+                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 w-24">수집일</th>
+                  <th className="w-12" />
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-50">
                 {filtered.map((product, idx) => (
-                  <tr key={product.id} className="hover:bg-gray-50 transition-colors group">
-                    {/* 번호 */}
+                  <tr
+                    key={product.id}
+                    onClick={() => router.push(`/sourcing/${product.id}`)}
+                    className="hover:bg-gray-50 transition-colors group cursor-pointer"
+                  >
                     <td className="px-4 py-3 text-xs text-gray-300 tabular-nums">{idx + 1}</td>
 
-                    {/* 상품 */}
+                    {/* 상품 — 이미지 + 제목 클릭 가능 */}
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-3">
                         <div className="w-10 h-10 rounded-lg overflow-hidden bg-gray-100 shrink-0">
@@ -170,7 +183,7 @@ export default function ProductsPage() {
                           )}
                         </div>
                         <div className="min-w-0">
-                          <p className="text-xs font-medium text-gray-800 truncate max-w-xs">
+                          <p className="text-xs font-medium text-gray-800 line-clamp-2 group-hover:text-gray-900">
                             {product.titleKo ?? product.titleOriginal}
                           </p>
                           <p className="text-[10px] text-gray-400 mt-0.5 font-mono">#{product.aliProductId}</p>
@@ -232,40 +245,35 @@ export default function ProductsPage() {
                       </span>
                     </td>
 
-                    {/* 액션 */}
-                    <td className="px-4 py-3">
-                      <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                    {/* 삭제 */}
+                    <td className="px-4 py-3" onClick={e => e.stopPropagation()}>
+                      <div className="flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                         {deleteState?.id === product.id ? (
                           deleteState.step === 'confirm' ? (
-                            <>
+                            <div className="flex items-center gap-1">
                               <button
-                                onClick={() => handleDelete(product.id)}
-                                className="text-[10px] font-semibold text-white bg-red-500 hover:bg-red-600 px-2 py-1 rounded-md transition-colors"
+                                onClick={e => handleDelete(e, product.id)}
+                                className="text-[10px] font-semibold text-white bg-red-500 hover:bg-red-600 px-2 py-1 rounded-md"
                               >
                                 삭제
                               </button>
                               <button
-                                onClick={() => setDeleteState(null)}
-                                className="text-[10px] text-gray-400 hover:text-gray-600 px-1.5 py-1"
+                                onClick={e => { e.stopPropagation(); setDeleteState(null) }}
+                                className="text-[10px] text-gray-400 hover:text-gray-600 px-1"
                               >
                                 취소
                               </button>
-                            </>
+                            </div>
                           ) : (
                             <Spinner size="sm" />
                           )
                         ) : (
-                          <>
-                            <button
-                              onClick={() => setDeleteState({ id: product.id, step: 'confirm' })}
-                              className="p-1 text-gray-300 hover:text-red-500 transition-colors rounded"
-                            >
-                              <Icon name="delete" size="sm" />
-                            </button>
-                            <Link href={`/sourcing/${product.id}`}>
-                              <Icon name="arrow_forward" size="sm" className="text-gray-400 hover:text-gray-700" />
-                            </Link>
-                          </>
+                          <button
+                            onClick={e => { e.stopPropagation(); setDeleteState({ id: product.id, step: 'confirm' }) }}
+                            className="p-1 text-gray-300 hover:text-red-500 transition-colors rounded"
+                          >
+                            <Icon name="delete" size="sm" />
+                          </button>
                         )}
                       </div>
                     </td>

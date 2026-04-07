@@ -28,7 +28,8 @@ export default function SourcingPage() {
   const fetchProducts = useCallback(async () => {
     const res = await fetch('/api/products')
     const json = await res.json()
-    setProducts(json.data ?? [])
+    const next = json.data ?? []
+    setProducts(prev => JSON.stringify(prev) === JSON.stringify(next) ? prev : next)
     setLoading(false)
   }, [])
 
